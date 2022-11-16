@@ -1,0 +1,32 @@
+/*
+
+Given a string S, return the sum of beauty of all its substrings.
+The beauty of a string is defined as the difference in frequencies between the most frequent and least frequent characters.
+
+For example, the beauty of string "aaac" is 3 - 1 = 2.
+
+*/
+
+class Solution {
+  public:
+    int beautySum(string s) {
+   int n = s.size();
+    int res = 0;
+    for(int i=0;i<n;i++){
+       
+       vector<int> dp(26);
+            for (int j = i; j < n; j++) {
+                dp[s[j] - 'a']++;
+                int a = 0, b = n;
+                for (int k = 0; k < 26; k++) {
+                    if (dp[k] > 0) {
+                        a = max(a, dp[k]);
+                        b = min(b, dp[k]);
+                    }
+                }
+                res += a - b;
+            }
+    }
+    return res;
+    }
+};
