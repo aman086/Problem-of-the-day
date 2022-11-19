@@ -1,0 +1,105 @@
+/*
+
+Check if all levels of two trees are anagrams or not
+
+Input:
+
+Output: 1
+Explanation: 
+Tree 1:
+Level 0 : 1
+Level 1 : 3, 2
+Level 2 : 5, 4
+
+Tree 2:
+Level 0 : 1
+Level 1 : 2, 3
+Level 2 : 4, 5
+
+As we can clearly see all the levels of above two binary trees 
+are anagrams of each other, hence return true.
+
+
+
+
+Example 2:
+
+Input:
+
+Output: 0
+Explanation: 
+Tree 1:
+Level 0 : 1
+Level 1 : 2, 3 
+Level 2 : 5, 4 
+
+Tree 2: 
+Level 0 : 1 
+Level 1 : 2, 4 
+Level 2 : 5, 3 
+
+As we can clearly see that level 1 and leve 2 are not anagrams of each other, hence return false.
+
+
+*/
+
+
+
+class Solution{
+    public:
+    bool areAnagrams(Node *root1, Node *root2)
+    {
+        set<int>first,second;
+        
+        queue<Node*>q1,q2;
+        q1.push(root1);
+        q2.push(root2);
+        first.insert(root1->data);
+        second.insert(root2->data);
+        
+        while(!q1.empty() and !q2.empty()){
+            
+            if(first!=second)return false;
+            first.clear();
+            second.clear();
+            int t1=q1.size();
+            
+            while(t1--){
+                auto top=q1.front();
+                q1.pop();
+                if(top->left){
+                    q1.push(top->left);
+                    first.insert(top->left->data);
+                }
+                if(top->right){
+                    q1.push(top->right);
+                    first.insert(top->right->data);
+                }
+                
+            }
+            
+            t1=q2.size();
+            
+            while(t1--){
+                auto top=q2.front();
+                q2.pop();
+                if(top->left){
+                    q2.push(top->left);
+                    second.insert(top->left->data);
+                }
+                if(top->right){
+                    q2.push(top->right);
+                    second.insert(top->right->data);
+                }
+                
+            }
+            
+            
+            
+        }
+        if(!q1.empty() or !q2.empty())return false;
+        
+        return true;
+        
+    }
+};
