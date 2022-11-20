@@ -1,0 +1,57 @@
+/*
+
+Given a number N.Find the maximum possible LCM that can be attained by any three numbers less than or equal to N.
+Note- LCM stands for Lowest Common Multiple. Also, Numbers can be repeated.
+
+
+Input:
+N=9
+Output:
+504
+Explanation:
+504 is the maximum LCM that can be attained
+by any triplet of numbers less than or equal 9.
+The triplet which has this LCM is {7,8,9}.
+
+
+Input:
+N=7
+Output:
+210
+Explanation:
+210 is the maximum LCM that can be attained
+by any triplet of numbers less than or equal 7.
+The triplet which has this LCM is {5,6,7}.
+
+
+*/
+
+class Solution {
+  public:
+    long long lcmTriplets(long long N) {
+       // Odd
+       if(N==1)
+        return 1;
+        if(N==2)
+        return 2;
+        if(N==3)
+        return 6;
+        if(N==4)
+        return 12;
+        if(N==5)
+        return 60;
+       if(N&1){
+           long long vl = N * (N-1) * (N-2);
+           return vl;
+       }else{
+           long long first;
+           if(N%3!=0)
+            first = N * (N-1) * (N-3);
+           else
+            first = N * (N-1) * (N-5);
+           long long second = (N-1) * (N-2) * (N-3);
+           return max(first , second);
+       }
+       return 0;
+    }
+};
