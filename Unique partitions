@@ -1,0 +1,70 @@
+	
+/*
+
+Given a positive integer n, generate all possible unique ways to represent n as sum of positive integers.
+Note: The generated output is printed without partitions. Each partition must be in decreasing order. Printing of all the partitions is done in reverse sorted order.
+
+
+Input: n = 3
+Output: 3 2 1 1 1 1
+Explanation: For n = 3, 
+{3}, {2, 1} and {1, 1, 1}
+
+
+Input: n = 4 
+Output: 4 3 1 2 2 2 1 1 1 1 1 1
+Explanation: For n = 4, 
+{4}, {3, 1}, {2, 2}, {2, 1, 1}, {1, 1, 1, 1}.
+*/
+
+
+vector<vector<int>> result;
+
+void createPartitions(int i , vector<int> &current , int total , int n){
+	
+	if(total<0 || i>n)
+		return;
+
+	if(total==0){
+		// sort(current.begin() , current.end() , greater<int>());
+		// if(find(result.begin() , result.end() , current)==result.end())
+			result.push_back(current);
+		return;
+	}
+
+
+	createPartitions(i+1 , current , total , n);
+	// if()
+	current.push_back(i);
+	createPartitions(i , current , total-i , n);
+	current.pop_back();
+	current.push_back(i);
+	createPartitions(i+1 , current , total-i , n);
+	current.pop_back();
+
+}
+
+
+vector<vector<int>> UniquePartitions(int n) {
+        
+     vector<int> current;
+     createPartitions(1 , current , n , n);   
+     
+     for(int i=0;i<result.size();i++){
+     	sort(result[i].begin(), result[i].end(), greater<int>());
+     }
+     sort(result.begin() , result.end() , greater<vector<int>>());
+
+     auto  it = unique(result.begin(), result.end());
+  
+    // resize the new vector
+    result.resize(distance(result.begin(), it));
+
+    //  for(auto it : result){
+    //  	 for(auto vl : it)
+    //  	 	cout<<vl<<" ";
+    //  	 cout<<endl;
+    //  }
+
+     	 return result;
+}
